@@ -16,9 +16,12 @@ import { BiPurchaseTag } from "react-icons/bi"
 import { RiNotification3Fill } from "react-icons/ri"
 import { BsCart4, BsSearch, BsCaretRight } from "react-icons/bs"
 import { GrAddCircle, GrSubtractCircle, GrClose } from "react-icons/gr"
+import { useRouter } from 'next/router'
 
 
 export default function Header() {
+
+    const router = useRouter()
 
     const flag = [
         {
@@ -156,7 +159,9 @@ export default function Header() {
             <div className='lg:flex lg:flex-row shrink w-screen h-16 p-2 items-center  bg-first'>
 
                 {/* Logo */}
-                <span className='flex w-1/6 h-full bg-white justify-center items-center'>
+                <span className='flex w-1/6 h-full bg-white justify-center items-center'
+                    onClick={()=>{router.push("/")}}
+                >
                     <img src='./bali.png' alt='logo' className='w-full h-full' />
                 </span>
 
@@ -206,7 +211,7 @@ export default function Header() {
                         {
                             menu.map((item, index) => (
 
-                                <span className="group w-full px-5 h-10 flexRowCenter text-sm justify-between hover:bg-first">
+                                <span key={index} className="group w-full px-5 h-10 flexRowCenter text-sm justify-between hover:bg-first">
                                     {item.category}
                                     <span><BsCaretRight /></span>
 
@@ -215,7 +220,7 @@ export default function Header() {
                                     >
                                         {
                                             item.subCategory.map((subItem, index2) => (
-                                                <span className='px-5 mx-5 h-10 flexRowCenter justify-between rounded-lg border-2 border-second text-white cursor-pointer'>{subItem}</span>)
+                                                <span key={index2} className='px-5 mx-5 h-10 flexRowCenter justify-between rounded-lg border-2 border-second text-white cursor-pointer'>{subItem}</span>)
                                             )
                                         }
                                     </span>
@@ -312,7 +317,7 @@ export default function Header() {
                         <div className='w-full h-80 overflow-auto gap-1'>
                             {
                                 cart.map((item, index) => (
-                                    <div className='w-full p-2 h-24 flex flex-col justify-start border-b-2 border-third'>
+                                    <div key={index} className='w-full p-2 h-24 flex flex-col justify-start border-b-2 border-third'>
 
                                         <span className='flex flex-row text-sm gap-1'>
                                             <img src={item.image} className='w-11 h-11 rounded-md' />

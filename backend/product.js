@@ -74,4 +74,15 @@ router.post("/addProduct", upload.single('image'), async (req, res) => {
 
 })
 
+router.get("/getOneProduct", async (req, res)=>{
+    let productID = req.query.ProductID
+    console.log(productID);
+    try {
+        let response = await products.find({ProductID: productID})
+        res.send(response)
+    } catch (error) {
+        res.send("Error in getting one product "+error.message)
+    }
+})
+
 module.exports = router

@@ -12,7 +12,7 @@ const Footer = () => {
             <span className='text-lg font-semibold'>About Us</span>
             {
                 aboutUs.map((item, index)=>(
-                    <Link href={Object.values(item)[0]}>{Object.keys(item)[0]}</Link>
+                    <Link key={index} href={Object.values(item)[0]}>{Object.keys(item)[0]}</Link>
                 ))
             }
         </span>
@@ -21,7 +21,7 @@ const Footer = () => {
             <span className='text-lg font-semibold'>Our Services</span>
             {
                 services.map((item, index)=>(
-                    <Link href={Object.values(item)[0]}>{Object.keys(item)[0]}</Link>
+                    <Link key={index} href={Object.values(item)[0]}>{Object.keys(item)[0]}</Link>
                 ))
             }
         </span>
@@ -30,7 +30,7 @@ const Footer = () => {
             <span className='text-lg font-semibold'>Monitize yourself</span>
             {
                 money.map((item, index)=>(
-                    <Link href={Object.values(item)[0]}>{Object.keys(item)[0]}</Link>
+                    <Link key={index} href={Object.values(item)[0]}>{Object.keys(item)[0]}</Link>
                 ))
             }
         </span>
