@@ -31,7 +31,10 @@ const productSchema = mongoose.Schema({
     instock: String,
     rating: Number,
     tags: [String],
-    sold: Number
+    sold: Number,
+    description: [String],
+    options: [String],
+
 })
 
 const products = mongoose.model("products", productSchema)
@@ -49,24 +52,33 @@ router.get("/getProducts", async (req, res) => {
 router.post("/addProduct", upload.single('image'), async (req, res) => {
 
     try {
+        let no_products = await (products.countDocuments({})) + 1
+
         let upload_product = {
-            ProductID: "product" + await (products.countDocuments({}) + 1),
+            ProductID: "product" + no_products,
             category: req.body.category,
-            image: {
-                data: fs.readFileSync('./uploads/upimage.png'),
-                contentType: 'image/png'
-            },
+            
             name: req.body.name,
             discount: req.body.discount,
             price: req.body.price,
             instock: "yes",
             rating: 0,
-            sold: 0
+            sold: 0,
+            description: req.body.description != undefined ? req.body.description: [],
+            options: req.body.options != undefined ? req.body.description: [],
+
+            image: {
+                data: fs.readFileSync('./uploads/upimage.png'),
+                contentType: 'image/png'
+            },
         }
+
+        console.log(upload_product);
 
         let response = await products.create(upload_product)
 
-        res.send("Created new product "+response)
+        res.send("Created new product ")
+        // res.send("Created new product "+response)
     } catch (error) {
         res.send("Error in creating new product "+error.message)
     }

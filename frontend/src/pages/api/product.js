@@ -24,6 +24,7 @@ const getOneProduct = async (ProductID) => {
         console.log(response);
         response = await response.json()
         console.log(response);
+        return response
 
     } catch (error) {
         console.log("error on getting product "+error.message);

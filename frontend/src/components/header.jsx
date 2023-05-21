@@ -162,7 +162,7 @@ export default function Header() {
                 <span className='flex w-1/6 h-full bg-white justify-center items-center'
                     onClick={()=>{router.push("/")}}
                 >
-                    <img src='./bali.png' alt='logo' className='w-full h-full' />
+                    <img src='/bali.png' alt='logo' className='w-full h-full' />
                 </span>
 
                 {/* Delivery locatiokn */}
