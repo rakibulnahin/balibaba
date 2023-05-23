@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState, useLayoutEffect } from 'react'
 import { getOneProduct } from '../api/product'
-import { Select } from 'antd'
+import { Modal, Select } from 'antd'
+import { TfiCommentsSmiley } from 'react-icons/tfi'
 
 const ProductView = () => {
 
@@ -16,8 +17,8 @@ const ProductView = () => {
    const [deliverCharge, setDeliverCharge] = useState(0)
    const [price, setPrice] = useState(0)
    const [optionSelect, setOptionSelect] = useState(0)
-   const [orderDate, setorderDate] = useState(new Date(Date.now()).toISOString())
-   const [deliveryDate, setDeliveryDate] = useState(new Date(Date.now()+ (3*24*3600*1000)).toISOString())
+   const [orderDate, setorderDate] = useState(new Date(Date.now()).toLocaleString())
+   const [deliveryDate, setDeliveryDate] = useState(new Date(Date.now() + (3 * 24 * 3600 * 1000)).toLocaleString())
 
    const [paymentView, setPaymentView] = useState("none")
    const [paymentWay, setPaymentWay] = useState("")
@@ -26,6 +27,9 @@ const ProductView = () => {
    const [card, setCard] = useState({ "type": "", "number": "", "amount": "", "pin": "" })
 
    const [purchaseForm, setPurchaseForm] = useState(null)
+
+   const [isModalOpen, setIsModalOpen] = useState(true)
+   const [modalBills, setModalBills] = useState({})
 
    useEffect(() => {
       async function getProduct() {
@@ -71,37 +75,148 @@ const ProductView = () => {
       }
    }
 
+   const ConfirmModal = () => (
+      <Modal
+         title="Confirm Order"
+         open={isModalOpen}
+         onCancel={() => { setIsModalOpen(false) }}
+         width={800}
+         onOk={() => { onHandleOk() }}
+         footer={[
+            <button
+               className='px-3 py-2 bg-blue-500 hover:bg-green-500 rounded-md text-white font-bold'
+               onClick={() => { onHandleConfirm() }}
+            >
+               Confirm
+            </button>
+         ]}
+      >
+         {
+            typeof (modalBills) != "string"
+               ?
+               <div className='px-2 grid grid-cols-1 lg:grid-cols-2 text-sm font-medium gap-3'>
+                  <div className='px-4 flex flex-col gap-3'>
+                     <span className='font-semibold'>Order ID: {modalBills.OrderID} </span>
+                     <span>Product name: {modalBills.name}</span>
+                     <span className='font-semibold'>Product price: {modalBills.price}</span>
+                     <span className='font-semibold'>Purchase quantity: {modalBills.quantity}</span>
+                     <span className='font-semibold'>Deliver charge: {modalBills.deliveryCharge}</span>
+                     <span className='font-semibold'>Total price: {modalBills.totalPrice}</span>
+                     <span>Option: {modalBills.option}</span>
+                     <span>Delivery Date: {modalBills.deliverDate}</span>
+                  </div>
+
+
+                  <div className='px-4 flex flex-col gap-3'>
+                     <span>User ID: {modalBills.UserID}</span>
+                     <span>Username: {modalBills.username}</span>
+                     <span>Order Date: {modalBills.orderDate}</span>
+                     <span className='font-semibold'>Pay with: {modalBills.paymentWay}</span>
+                     <span className='font-semibold'>Payment details: {modalBills.paymentNumber}</span>
+                     <span className='font-semibold'>Pay amount: {modalBills.paymentAmout}</span>
+                  </div>
+               </div>
+               :
+               <div className='flexColCenter'>
+                  <TfiCommentsSmiley className='text-5xl text-second'/>
+                  <span className='text-xl font-medium'>{modalBills}</span>
+               </div>
+         }
+
+      </Modal>
+   )
+
+   const onHandleConfirm = () => {
+      console.log(modalBills);
+      if ((modalBills.totalPrice == modalBills.paymentAmount) && modalBills.paymentAmount > 0) {
+         console.log("Call server");
+         setModalBills("Congrtulations your orders is placed, you will reciece a notification shortly")
+         setIsModalOpen(true)
+      } else {
+         console.log("pay the right amount please");
+         setModalBills("pay the right amount please!!")
+         setIsModalOpen(true)
+      }
+   }
+
    const onPurchaseHandler = (flag) => {
       let values
-      if(flag == 0){
+      if (flag == 0) {
          values = Object.values(bkash);
          let acc_number = /^[0-9]+$/.test(values[0]);
          let amount = /^([0-9]+[.])?[0-9]+$/.test(values[1]);
          let pin = /^[0-9]+$/.test(values[2]);
 
-         if(acc_number && amount && pin){
+         console.log(acc_number, amount, pin, values);
+
+
+         if (acc_number && amount && pin) {
+
             let bills = {
                ProductID: product.ProductID,
                OrderID: "order1",
                UserID: "user1",
+               username: "Rakibul Alam Nahin",
                name: product.name,
                price: price,
                quantity: purchaseQuantity,
                deliveryCharge: deliverCharge,
-               totalPrice: (price*purchaseQuantity)+deliverCharge,
+               totalPrice: (price * purchaseQuantity) + deliverCharge,
                option: product.options[optionSelect],
                orderDate: orderDate,
                deliverDate: deliveryDate,
                paymentWay: "bkash",
                paymentNumber: bkash["number"],
-               paymentAmout: bkash["amount"],
+               paymentAmount: bkash["amount"],
             }
 
             console.log(bills);
-         }
-         console.log(acc_number, amount, pin, values);
-      }else if(flag == 1){
+            setModalBills(bills)
+            setIsModalOpen(true)
 
+         } else {
+            console.log("Bkash credentials not given properly");
+            setModalBills("Bkash credentials not given properly")
+            setIsModalOpen(true)
+         }
+      } else if (flag == 1) {
+         values = Object.values(card);
+         let acc_number = /^[0-9]+$/.test(values[1]);
+         let amount = /^([0-9]+[.])?[0-9]+$/.test(values[2]);
+         let pin = /^[0-9]+$/.test(values[3]);
+
+         console.log(acc_number, amount, pin, values);
+
+
+         if (acc_number && amount && pin) {
+
+            let bills = {
+               ProductID: product.ProductID,
+               OrderID: "order1",
+               UserID: "user1",
+               username: "Rakibul Alam Nahin",
+               name: product.name,
+               price: price,
+               quantity: purchaseQuantity,
+               deliveryCharge: deliverCharge,
+               totalPrice: (price * purchaseQuantity) + deliverCharge,
+               option: product.options[optionSelect],
+               orderDate: orderDate,
+               deliverDate: deliveryDate,
+               paymentWay: "card(" + card['type'] + ")",
+               paymentNumber: card["number"],
+               paymentAmount: card["amount"],
+            }
+
+            console.log(bills);
+            setModalBills(bills)
+            setIsModalOpen(true)
+
+         } else {
+            console.log("Card credentials not given properly");
+            setModalBills("Card credentials not given properly")
+            setIsModalOpen(true)
+         }
       }
    }
 
@@ -253,6 +368,12 @@ const ProductView = () => {
          ?
          // <ShowView />
          <div className='w-full px-10 flex flex-col'>
+
+            {/* Modal */}
+            <ConfirmModal />
+
+
+
             <span className='w-2/3 my-4 text-2xl font-semibold bg-red-500'>{product.name}</span>
 
             <div className='flex flex-col md:flex-row'>
@@ -316,13 +437,13 @@ const ProductView = () => {
                               <span className='text-lg'>Options: </span>
                               {
                                  product.options.map((value, index) => (
-                                    <button key={index} 
+                                    <button key={index}
                                        className='ml-5 px-3 flexRowCenter h-8 rounded-lg text-sm font-semibold border-2 border-blue-400 hover:bg-blue-400'
                                        style={{
                                           backgroundColor: optionSelect == index ? "rgb(96, 165, 250)" : "",
                                           color: optionSelect == index ? "white" : ""
                                        }}
-                                       onClick={()=>{setOptionSelect(index)}}
+                                       onClick={() => { setOptionSelect(index) }}
                                     >
                                        {value}
                                     </button>
