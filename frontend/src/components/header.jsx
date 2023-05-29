@@ -25,17 +25,17 @@ export default function Header() {
 
     const flag = [
         {
-            label: <span className='flex flex-row text-sm gap-2 items-center'><img src='/flag/bangladesh.png' alt='flag' className='lg:hidden w-6 h-5' /> <span className='hidden lg:flex'>Bangladesh</span></span>,
+            label: <span className='flex flex-row text-sm gap-2 items-center'><img src='/flag/bangladesh.png' alt='flag' className=' w-6 h-5' /> <span className='flex'>Bangladesh</span></span>,
             value: "bangladesh"
         },
 
         {
-            label: <span className='flex flex-row text-sm gap-2 items-center' ><img src='/flag/canada.png' className=' lg:hidden w-6 h-5' /> <span className='hidden lg:flex'>Canada</span></span>,
+            label: <span className='flex flex-row text-sm gap-2 items-center' ><img src='/flag/canada.png' className=' w-6 h-5' /> <span className='flex'>Canada</span></span>,
             value: "Canada"
         },
 
         {
-            label: <span className='flex flex-row text-sm gap-2 items-center'><img src='/flag/norway.png' className=' lg:hidden w-6 h-5' /> <span className='hidden lg:flex'>Norway</span></span>,
+            label: <span className='flex flex-row text-sm gap-2 items-center'><img src='/flag/norway.png' className=' w-6 h-5' /> <span className='flex'>Norway</span></span>,
             value: "norway"
         },
     ]
@@ -156,17 +156,17 @@ export default function Header() {
 
     return (
         (
-            <div className='hidden lg:flex lg:flex-row shrink w-screen h-16 p-2 items-center  bg-first'>
+            <div className='flex flex-row shrink w-screen h-16 p-2 items-center  bg-first'>
 
                 {/* Logo */}
-                <span className='flex w-1/6 h-full bg-white justify-center items-center'
-                    onClick={()=>{router.push("/")}}
+                <span className='flex w-[180px] md:w-1/6 h-full bg-white justify-center items-center'
+                    onClick={() => { router.push("/") }}
                 >
                     <img src='/bali.png' alt='logo' className='w-full h-full' />
                 </span>
 
                 {/* Delivery locatiokn */}
-                <span className='flex flex-row gap-1 ml-3'>
+                <span className='hidden md:flex flex-row gap-1 ml-3'>
                     <ImLocation2 className='w-7 h-7 text-fourth' />
                     <span className='flex flex-col lg:flex-row  justify-center items-center gap-2'>
                         <span className='hidden lg:flex text-sm font-semibold'>Delivery to :</span>
@@ -196,11 +196,6 @@ export default function Header() {
                         <CiMenuKebab className='w-7 h-full' />
                         <span>Menu</span>
                     </span>
-
-                    {/* <div className=' w-100 h-100 flex flex-row  bg-blue-200'>
-        
-        
-                </div> */}
 
                     <div
                         className='z-30 absolute w-56 py-2 h-100 top-12 flex-col bg-blue-200'
@@ -239,7 +234,7 @@ export default function Header() {
 
 
 
-                {/* Big GAP */}
+                {/* Big Search */}
                 <span className='flexRowCenter mx-3 w-2/5 h-full bg-blue-200 rounded-lg'>
                     <input type='text' placeholder='search products' className='w-full h-full rounded-l-lg px-2 focus:outline-none' />
                     <span className='w-12 h-full flexRowCenter text-xl'><BsSearch /></span>
@@ -257,43 +252,47 @@ export default function Header() {
                             trigger={['click']}
                         >
                             <span
-                                className='flex flex-row w-36 h-full items-center gap-3'
+                                className='hidden md:flex flex-row w-36 h-full items-center gap-3'
                                 onClick={(e) => { e.preventDefault() }}
                             >
                                 <FaUserAlt className='w-1/4 h-full' />
-                                <span className='w-3/4 h-full text-sm font-semibold flexRowCenter justify-start'>Rakibul Alam Nahin</span>
-                                <DownOutlined className='w-6 h-6' />
+                                <span className='hidden md:flex w-3/4 h-full text-sm font-semibold flexRowCenter justify-start'>Rakibul Alam Nahin</span>
+                                <DownOutlined className='hidden md:flex w-6 h-6' />
                             </span>
 
                         </Dropdown>
                         :
                         <span
-                            className='flex flex-row w-32 h-full items-center gap-3 hover:text-red-700 hover:cursor-pointer'
+                            className='hidden  flex-row w-32 h-full items-center gap-3 hover:text-red-700 hover:cursor-pointer'
                             onClick={(e) => { e.preventDefault() }}
                         >
                             <FaUserAlt className='w-1/4 h-full' />
-                            <span className='w-3/4 h-full text-sm font-semibold flexRowCenter justify-start'>Guest</span>
+                            <span className='hidden md:flex w-3/4 h-full text-sm font-semibold flexRowCenter justify-start'>Guest</span>
                         </span>
                 }
 
+
                 {/* Notification */}
-
-                <Dropdown
-                    menu={{
-                        items: notificationDropdown
-                    }}
-                    trigger={['click']}
-                    className='mx-3 hover:cursor-pointer'
-                >
-                    <span
-                        className='relative flex flex-row items-center'
-                        onClick={(e) => { e.preventDefault() }}
+                <span className='hidden lg:flex'>
+                    <Dropdown
+                        menu={{
+                            items: notificationDropdown
+                        }}
+                        trigger={['click']}
+                        className='mx-3 hover:cursor-pointer'
                     >
-                        <RiNotification3Fill className='w-8 h-8' />
-                        <span className='absolute text-red-500 text-4xl -top-4 right-0'>&#x2022;</span>
-                    </span>
+                        <span
+                            className='relative flex flex-row items-center'
+                            onClick={(e) => { e.preventDefault() }}
+                        >
+                            <RiNotification3Fill className='w-8 h-8' />
+                            <span className='absolute text-red-500 text-4xl -top-4 right-0'>&#x2022;</span>
+                        </span>
 
-                </Dropdown>
+                    </Dropdown>
+                </span>
+
+
 
                 {/* Cart */}
                 <span className=' relative flex flex-row px-3 h-full justify-end items-center'>
