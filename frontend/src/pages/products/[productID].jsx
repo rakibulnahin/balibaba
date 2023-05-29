@@ -28,7 +28,7 @@ const ProductView = () => {
 
    const [purchaseForm, setPurchaseForm] = useState(null)
 
-   const [isModalOpen, setIsModalOpen] = useState(true)
+   const [isModalOpen, setIsModalOpen] = useState(false)
    const [modalBills, setModalBills] = useState({})
 
    useEffect(() => {

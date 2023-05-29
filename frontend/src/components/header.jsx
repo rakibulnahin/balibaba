@@ -156,7 +156,7 @@ export default function Header() {
 
     return (
         (
-            <div className='lg:flex lg:flex-row shrink w-screen h-16 p-2 items-center  bg-first'>
+            <div className='hidden lg:flex lg:flex-row shrink w-screen h-16 p-2 items-center  bg-first'>
 
                 {/* Logo */}
                 <span className='flex w-1/6 h-full bg-white justify-center items-center'

@@ -17,14 +17,14 @@ module.exports = {
         first: "#3795BD",
         second: "#2F58CD",
         third: "#4E31AA",
-        fourth: "#3A1078",
+        fourth: "#72bdf7",
       },
 
       colors: {
         first: "#3795BD",
         second: "#2F58CD",
         third: "#4E31AA",
-        fourth: "#3A1078",
+        fourth: "#72bdf7",
       },
 
       height:{
