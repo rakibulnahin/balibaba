@@ -190,11 +190,11 @@ export default function Header() {
                 <span className='relative mx-3'>
 
                     <span
-                        className=' flexRowCenter p-2 w-20 h-9 rounded-lg bg-blue-200 hover:border-2 hover:border-second hover:cursor-pointer'
+                        className=' flexRowCenter sm:p-2 sm:w-20 h-9 rounded-lg bg-blue-200 hover:border-2 hover:border-second hover:cursor-pointer'
                         onClick={() => { setShowMenu(!showMenu) }}
                     >
                         <CiMenuKebab className='w-7 h-full' />
-                        <span>Menu</span>
+                        <span className='hidden sm:flex'>Menu</span>
                     </span>
 
                     <div
@@ -235,7 +235,7 @@ export default function Header() {
 
 
                 {/* Big Search */}
-                <span className='flexRowCenter mx-3 w-2/5 h-full bg-blue-200 rounded-lg'>
+                <span className='flexRowCenter sm:mx-3 w-3/5 md:w-2/5 h-full bg-blue-200 rounded-lg'>
                     <input type='text' placeholder='search products' className='w-full h-full rounded-l-lg px-2 focus:outline-none' />
                     <span className='w-12 h-full flexRowCenter text-xl'><BsSearch /></span>
                 </span>
