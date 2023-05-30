@@ -374,7 +374,7 @@ const ProductView = () => {
 
 
 
-            <span className='w-2/3 my-4 text-2xl font-semibold bg-red-500'>{product.name}</span>
+            <span className='w-2/3 my-4 text-2xl font-semibold'>{product.name}</span>
 
             <div className='flex flex-col md:flex-row'>
                <img alt='product image' src={"data:image/png;base64," + imgToBase64()}
