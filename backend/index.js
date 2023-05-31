@@ -19,7 +19,7 @@ console.log(MongoDB_connect);
 const ConnectDB = async ()=>{
     try {
         mongoose.connect(
-            MongoDB_connect+'/Shop',
+            "mongodb://127.0.0.1:27017"+'/Shop',
             { useNewUrlParser: true, useUnifiedTopology: true }
         )
         console.log("Connected to database");

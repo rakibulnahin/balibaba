@@ -82,38 +82,35 @@ export default function Header() {
 
     const menu = [
         {
-            category: "Health Care & Medicine",
-            subCategory: ["Pharmacy", "Health Kit", "Vision", "Health Center"]
-        },
-
-        {
-            category: "Accessories",
-            subCategory: ["Mobile Phones", "Laptop", "Charger & Headphones", "Appliences", "Components"]
-        },
-
-        {
-            category: "Auto Care and Services",
-            subCategory: ["Tires", "Oil & Mobile", "Modifications", "Repair"]
-        },
-
-        {
-            category: "Home appliences",
+            category: { name: "All", link: "/products/category?category=all" },
             subCategory: []
         },
 
         {
-            category: "Gifts & Cards",
-            subCategory: ["Gifts", "Cards", "Wrappings", "Invitations"]
+            category: { name: "Clothings", link: "/products/category?category=clothings" },
+            subCategory: [
+                { name: "Mens", link: "/products/category?subcategory=mens" },
+                { name: "Womens", link: "/products/category?subcategory=womens" },
+                { name: "Fashion", link: "/products/category?subcategory=fashion" },
+                { name: "Kids", link: "/products/category?subcategory=kids" },
+            ]
         },
 
         {
-            category: "Financial & More",
-            subCategory: []
+            category: { name: "Electronics", link: "/products/category?category=electronics" },
+            subCategory: [
+                { name: "Accessories", link: "/products/category?subcategory=accessories" },
+                { name: "Laptop", link: "/products/category?subcategory=laptop" },
+                { name: "Appliences", link: "/products/category?subcategory=appliences" },
+            ]
         },
 
         {
-            category: "Local Groceries",
-            subCategory: []
+            category: { name: "Gifts", link: "/products/category?category=gifts" },
+            subCategory: [
+                { name: "Gifts", link: "/products/category?subcategory=gifts" },
+                { name: "Cards", link: "/products/category?subcategory=cards" },
+            ]
         },
     ]
 
@@ -206,8 +203,14 @@ export default function Header() {
                         {
                             menu.map((item, index) => (
 
-                                <span key={index} className="group w-full px-5 h-10 flexRowCenter text-sm justify-between hover:bg-first">
-                                    {item.category}
+                                <span key={index} className="group w-full px-5 h-10 flexRowCenter text-sm font-semibold justify-between hover:bg-first cursor-pointer">
+                                    <span
+                                        onClick={() => { router.push(item.category.link); setShowMenu(false) }}
+                                        className='hover:text-third'
+                                    >
+                                        {item.category.name}
+                                    </span>
+
                                     <span><BsCaretRight /></span>
 
                                     <span
@@ -215,7 +218,16 @@ export default function Header() {
                                     >
                                         {
                                             item.subCategory.map((subItem, index2) => (
-                                                <span key={index2} className='px-5 mx-5 h-10 flexRowCenter justify-between rounded-lg border-2 border-second text-white cursor-pointer'>{subItem}</span>)
+                                                <span key={index2} className='px-5 mx-5 h-10 flexRowCenter justify-between rounded-lg border-2 border-second text-white'
+                                                    
+                                                >
+                                                    <span
+                                                        onClick={() => { router.push(subItem.link); setShowMenu(false) }}
+                                                        className='hover:text-third'
+                                                    >
+                                                        {subItem.name}
+                                                    </span>
+                                                </span>)
                                             )
                                         }
                                     </span>
