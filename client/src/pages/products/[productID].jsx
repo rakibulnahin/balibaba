@@ -119,7 +119,7 @@ const ProductView = () => {
                </div>
                :
                <div className='flexColCenter'>
-                  <TfiCommentsSmiley className='text-5xl text-second'/>
+                  <TfiCommentsSmiley className='text-5xl text-second' />
                   <span className='text-xl font-medium'>{modalBills}</span>
                </div>
          }
@@ -368,7 +368,7 @@ const ProductView = () => {
       product != null
          ?
          // <ShowView />
-         <div className='w-full px-10 flex flex-col'>
+         <div className='w-full mb-3 px-10 flex flex-col'>
 
             {/* Modal */}
             <ConfirmModal />
@@ -495,7 +495,7 @@ const ProductView = () => {
 
 
                   {/* Buy now or add to cart */}
-                  <div className='p-5 w-80 flex flex-col gap-2 border-2 border-green-500 overflow-hidden'>
+                  <div className='p-5 w-80 flex flex-col gap-2 border-2 border-fourth rounded-lg overflow-hidden'>
 
                      {RightView()}
 
