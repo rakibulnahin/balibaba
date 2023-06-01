@@ -1,9 +1,12 @@
 import axios from "axios";
+require('dotenv').config()
+
+const server = process.env.server
 
 const getAllProducts = async () => {
 
     try {
-        let response = await axios.get("http://localhost:3001/api/products/getProducts")
+        let response = await axios.get(server+"/api/products/getProducts")
         console.log(response);
         return response.data
 
@@ -20,7 +23,7 @@ const getOneProduct = async (ProductID) => {
         // console.log(response);
         // return response.data
 
-        let response = await fetch(`http://localhost:3001/api/products/getOneProduct?ProductID=${encodeURIComponent(ProductID)}`)
+        let response = await fetch(server+`/api/products/getOneProduct?ProductID=${encodeURIComponent(ProductID)}`)
         console.log(response);
         response = await response.json()
         console.log(response);

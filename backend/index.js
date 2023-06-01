@@ -31,7 +31,7 @@ const ConnectDB = async ()=>{
 }
 
 app.get("/", (req, res)=>{
-    res.send("Hello")
+    res.send("This is from backend file")
 })
 
 app.listen(3001, ()=>{

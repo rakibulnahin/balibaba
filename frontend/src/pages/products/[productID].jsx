@@ -86,6 +86,7 @@ const ProductView = () => {
             <button
                className='px-3 py-2 bg-blue-500 hover:bg-green-500 rounded-md text-white font-bold'
                onClick={() => { onHandleConfirm() }}
+               key={"modal footer"}
             >
                Confirm
             </button>

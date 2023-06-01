@@ -6,7 +6,7 @@ import UserModal from '@/components/userModal'
 import { FaRegUser, FaUserCircle } from "react-icons/fa"
 import { RiLockPasswordLine, RiLockPasswordFill } from "react-icons/ri"
 
-const login = () => {
+const Login = () => {
 
     const router = useRouter()
 
@@ -177,4 +177,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login
