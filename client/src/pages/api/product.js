@@ -4,7 +4,7 @@ import axios from "axios";
 const getAllProducts = async () => {
 
     try {
-        console.log(process.env.NEXT_PUBLIC_SERVER+"/api/products/getProducts");
+        console.log(process.env.SERVER+"/api/products/getProducts");
         let response = await axios.get(server+"/api/products/getProducts")
         console.log(response);
         return response.data
@@ -22,7 +22,7 @@ const getOneProduct = async (ProductID) => {
         // console.log(response);
         // return response.data
 
-        let response = await fetch(process.env.NEXT_PUBLIC_SERVER+`/api/products/getOneProduct?ProductID=${encodeURIComponent(ProductID)}`)
+        let response = await fetch(process.env.SERVER+`/api/products/getOneProduct?ProductID=${encodeURIComponent(ProductID)}`)
         console.log(response);
         response = await response.json()
         console.log(response);
