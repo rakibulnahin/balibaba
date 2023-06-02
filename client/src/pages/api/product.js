@@ -4,7 +4,7 @@ import axios from "axios";
 const getAllProducts = async () => {
 
     try {
-        console.log(process.env.NEXT_PUBLIC_SERVER+"/api/products/getProducts");
+        // console.log(process.env.NEXT_PUBLIC_SERVER+"/api/products/getProducts");
         let response = await axios.get(process.env.NEXT_PUBLIC_SERVER+"/api/products/getProducts")
         console.log(response);
         return response.data
