@@ -6,6 +6,7 @@ const server = process.env.NEXT_PUBLIC_SERVER
 const getAllProducts = async () => {
 
     try {
+        console.log(server+"/api/products/getProducts");
         let response = await axios.get(server+"/api/products/getProducts")
         console.log(response);
         return response.data
