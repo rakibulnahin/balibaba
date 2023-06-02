@@ -2,9 +2,13 @@ const express = require("express")
 const mongoose = require("mongoose")
 const multer = require('multer');
 const fs = require('fs')
+const cors = require('cors')
+
 
 const router = express.Router()
 router.use(express.urlencoded({ extended: true }))
+router.use(cors())
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -41,6 +45,7 @@ const products = mongoose.model("products", productSchema)
 
 router.get("/getProducts", async (req, res) => {
     try {
+        console.log("In the Server Getting products");
         const result = await products.find({})
         res.send(result)
     } catch (error) {

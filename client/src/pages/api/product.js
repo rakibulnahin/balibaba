@@ -1,7 +1,7 @@
 import axios from "axios";
 // require('dotenv').config()
 
-const server = "http://localhost:3001"
+const server = process.env.NEXT_PUBLIC_SERVER
 
 const getAllProducts = async () => {
 
