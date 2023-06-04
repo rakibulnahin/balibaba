@@ -37,6 +37,6 @@ app.get("/", (req, res)=>{
 })
 
 app.listen(PORT, ()=>{
-    console.log("Status 200 server connected");
+    console.log("Status 200 server connected to port "+ PORT);
         ConnectDB()
 })

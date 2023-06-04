@@ -82,34 +82,47 @@ export default function Header() {
 
     const menu = [
         {
-            category: { name: "All", link: "/products/category?category=all" },
+            category: { name: "All", link: "/products/category" },
             subCategory: []
         },
 
         {
-            category: { name: "Clothings", link: "/products/category?category=clothings" },
+            category: { name: "Clothings", link: "/products/category?category=clothing" },
             subCategory: [
-                { name: "Mens", link: "/products/category?subcategory=mens" },
-                { name: "Womens", link: "/products/category?subcategory=womens" },
-                { name: "Fashion", link: "/products/category?subcategory=fashion" },
-                { name: "Kids", link: "/products/category?subcategory=kids" },
+                { name: "Mens", link: "/products/category?tags=men" },
+                { name: "Womens", link: "/products/category?tags=women" },
+                { name: "Fashion", link: "/products/category?tags=fashion" },
+                { name: "Kids", link: "/products/category?tags=kid" },
             ]
         },
 
         {
             category: { name: "Electronics", link: "/products/category?category=electronics" },
             subCategory: [
-                { name: "Accessories", link: "/products/category?subcategory=accessories" },
-                { name: "Laptop", link: "/products/category?subcategory=laptop" },
-                { name: "Appliences", link: "/products/category?subcategory=appliences" },
+                { name: "Accessories", link: "/products/category?tags=accessories" },
+                { name: "Laptop", link: "/products/category?tags=laptop" },
+                { name: "Phones", link: "/products/category?tags=phone" },
             ]
         },
 
         {
             category: { name: "Gifts", link: "/products/category?category=gifts" },
             subCategory: [
-                { name: "Gifts", link: "/products/category?subcategory=gifts" },
-                { name: "Cards", link: "/products/category?subcategory=cards" },
+                { name: "Gifts", link: "/products/category?tags=gift" },
+                { name: "Cards", link: "/products/category?tags=card" },
+            ]
+        },
+
+        {
+            category: { name: "Others", link: ""+router.pathname },
+            subCategory: [
+                { name: "Special Offers", link: "/products/category?tags=special offer" },
+                { name: "New Arrivals", link: "/products/category?tags=new arrival" },
+                { name: "Trending", link: "/products/category?tags=trending" },
+                { name: "Most Bought", link: "/products/category?tags=most bought" },
+                { name: "Flash Deals", link: "/products/category?tags=flash deal" },
+                { name: "Pre-Order", link: "/products/category?tags=pre order" },
+                { name: "Affordable & Discounts", link: "/products/category?tags=discount" },
             ]
         },
     ]

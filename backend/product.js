@@ -2,12 +2,12 @@ const express = require("express")
 const mongoose = require("mongoose")
 const multer = require('multer');
 const fs = require('fs')
-const cors = require('cors')
+// const cors = require('cors')
 
 
 const router = express.Router()
 router.use(express.urlencoded({ extended: true }))
-router.use(cors())
+// router.use(cors())
 
 
 const storage = multer.diskStorage({
@@ -54,6 +54,30 @@ router.get("/getProducts", async (req, res) => {
 
 })
 
+router.get("/getFilteredProducts", async (req, res) => {
+    let category = req.query.category;
+    let tags = req.query.tags;
+    try {
+        console.log("Getting ");
+        if (category != "undefined") {
+            console.log("Filtering by category " + typeof(category) );
+            const result = await products.find({ category: category })
+            res.send(result)
+        } else if (tags != "undefined") {
+            console.log("Filtering by tags " + tags);
+            const result = await products.find({tags:tags})
+            res.send(result)
+        } else {
+            console.log("Filtered to all items");
+            const result = await products.find({})
+            res.send(result)
+        }
+    } catch (error) {
+        res.send("Couldnt get products " + error.message)
+    }
+
+})
+
 router.post("/addProduct", upload.single('image'), async (req, res) => {
 
     try {
@@ -62,15 +86,16 @@ router.post("/addProduct", upload.single('image'), async (req, res) => {
         let upload_product = {
             ProductID: "product" + no_products,
             category: req.body.category,
-            
+
             name: req.body.name,
             discount: req.body.discount,
             price: req.body.price,
             instock: req.body.instock,
             rating: req.body.rating != undefined ? req.body.rating : 0,
             sold: req.body.sold != undefined ? req.body.sold : 0,
-            description: req.body.description != undefined ? req.body.description: [],
-            options: req.body.options != undefined ? req.body.options: [],
+            description: req.body.description != undefined ? req.body.description : [],
+            options: req.body.options != undefined ? req.body.options : [],
+            tags: req.body.tags != undefined ? req.body.tags : [],
 
             image: {
                 data: fs.readFileSync('./uploads/upimage.png'),
@@ -85,20 +110,20 @@ router.post("/addProduct", upload.single('image'), async (req, res) => {
         res.send("Created new product ")
         // res.send("Created new product "+response)
     } catch (error) {
-        res.send("Error in creating new product "+error.message)
+        res.send("Error in creating new product " + error.message)
     }
 
 
 })
 
-router.get("/getOneProduct", async (req, res)=>{
+router.get("/getOneProduct", async (req, res) => {
     let productID = req.query.ProductID
     console.log(productID);
     try {
-        let response = await products.find({ProductID: productID})
+        let response = await products.find({ ProductID: productID })
         res.send(response)
     } catch (error) {
-        res.send("Error in getting one product "+error.message)
+        res.send("Error in getting one product " + error.message)
     }
 })
 

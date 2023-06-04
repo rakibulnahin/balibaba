@@ -29,10 +29,13 @@ module.exports = {
 
       height:{
         100: "400px",
+        110: "440px",
       },
 
       width:{
-        100: "400px"
+        100: "400px",
+        110: "440px"
+
       },
 
       borderWidth: {

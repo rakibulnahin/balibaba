@@ -42,43 +42,43 @@ export default function Home() {
     {
       image: '/banners/1.png',
       title: "Special Offers",
-      link: ""
+      link: "/products/category?tags=special offer" 
     },
 
     {
       image: '/banners/2.png',
       title: "New Arrivals",
-      link: ""
+      link: "/products/category?tags=new arrival" 
     },
 
     {
       image: '/banners/3.png',
       title: "Flash Deals",
-      link: ""
+      link: "/products/category?tags=trending" 
     },
 
     {
       image: '/banners/1.png',
       title: "Most Bought",
-      link: ""
+      link: "/products/category?tags=most bought" 
     },
 
     {
       image: '/banners/2.png',
       title: "Trending",
-      link: ""
+      link: "/products/category?tags=flash deal" 
     },
 
     {
       image: '/banners/3.png',
       title: "Pre-Order",
-      link: ""
+      link: "/products/category?tags=pre order" 
     },
 
     {
       image: '/banners/1.png',
       title: "Affordable & Discounts",
-      link: ""
+      link: "/products/category?tags=discount" 
     }
   ])
 
@@ -96,7 +96,7 @@ export default function Home() {
   }, [])
 
   const BannerView = () => (
-    <div className='relative py-5 flexRowCenter w-screen h-96 xl:h-100 bg-gradient-to-b from-third via-second to-transparent cursor-pointer'>
+    <div className='relative py-5 flexRowCenter w-screen h-100 xl:h-110 bg-gradient-to-b from-third via-second to-transparent cursor-pointer'>
 
       <span
         className='max-xl:absolute max-xl:left-2 max-xl:z-10 ml-1 max-xl:pb-6 w-16 xl:h-full flexRowCenter max-xl:bg-fourth hover:border-1 border-white rounded-lg text-8xl'
@@ -115,8 +115,9 @@ export default function Home() {
         >
           {
             banner.map((value, index) => (
-              <div key={index} className='flexRowCenter w-full h-80 xl:h-96 rounded-lg'>
-                <img className='w-full h-full  rounded-lg' src={value.image} />
+              <div key={index} className='flexRowCenter w-full h-96 xl:h-110 rounded-lg object-fill'>
+                
+                <img className='w-full h-full rounded-lg object-fill' src={value.image} />
                 {/* hello */}
               </div>
             ))
@@ -140,7 +141,10 @@ export default function Home() {
 
       {
         tags.map((value, index) => (
-          <span key={index} className='p-3 w-60 lg:w-72 shadow-left shadow-third/40 rounded-md bg-white flexColCenter hover:text-second cursor-default'>
+          <span key={index} 
+            className='p-3 w-60 lg:w-72 shadow-left shadow-third/40 rounded-md bg-white flexColCenter hover:text-second cursor-default'
+            onClick={()=>{router.push(value.link)}}
+          >
             <span className='w-full justify-start text-xl font-semibold underline'>{value.title}</span>
             <img className='my-2 w-full h-60 lg:h-72 rounded-lg' src={value.image} />
           </span>
@@ -151,7 +155,7 @@ export default function Home() {
   )
 
   const BuynowView = () => (
-    <div className='px-10 lg:px-28 mb-10 w-full flexColCenter lg:items-start gap-5'>
+    <div className='px-10 xl:px-28 mb-10 w-full flexColCenter xl:items-start gap-5'>
       <span className='flex flex-row text-2xl font-semibold underline'>Buy Now</span>
 
       <div className='w-full gap-5 flex flex-row max-lg:justify-center flex-wrap'>
