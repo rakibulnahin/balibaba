@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 
 const inter = Inter({ subsets: ['latin'] })
 
+import demo_product from '@/data/demo_product';
 
 
 export default function Home() {
@@ -34,8 +35,9 @@ export default function Home() {
     },
   ])
 
-  const [buyNow, setBuyNow] = useState([])
+  const [buyNow, setBuyNow] = useState(demo_product)
 
+  // Global States
 
   // Local states
   const [tags, setTags] = useState([
@@ -169,7 +171,7 @@ export default function Home() {
                 className='relative group w-60 min-w-[230px] shadow-left shadow-third/40 rounded-md bg-white flexColCenter cursor-default overflow-hidden'
                 onClick={() => { router.push(`/products/${value.ProductID}`) }}
               >
-                <img className='w-full h-56 rounded-t-lg' src={`data:image/png;base64,${base64string}`} alt='buy now image' />
+                <img className='w-full h-56 rounded-t-lg' src={`data:image/png;base64,${base64string}`} alt='Sorry I guess the server stopped' />
                 {
                   value.name.length > 50
                     ?

@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { Select, Dropdown } from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
 
-import { useState } from 'react'
-
+import { setUserDetials } from '@/redux/userDetailsSlice'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -114,7 +115,7 @@ export default function Header() {
         },
 
         {
-            category: { name: "Others", link: ""+router.pathname },
+            category: { name: "Others", link: "" + router.pathname },
             subCategory: [
                 { name: "Special Offers", link: "/products/category?tags=special offer" },
                 { name: "New Arrivals", link: "/products/category?tags=new arrival" },
@@ -151,6 +152,11 @@ export default function Header() {
 
 
     ])
+    const userDetails = useSelector((state) => state.userDetails)
+
+    // useEffect(()=>{
+    //     console.log("user details", userDetails);
+    // }, [userDetails])
 
 
     // Header states 
@@ -232,7 +238,7 @@ export default function Header() {
                                         {
                                             item.subCategory.map((subItem, index2) => (
                                                 <span key={index2} className='px-5 mx-5 h-10 flexRowCenter justify-between rounded-lg border-2 border-second text-white'
-                                                    
+
                                                 >
                                                     <span
                                                         onClick={() => { router.push(subItem.link); setShowMenu(false) }}
@@ -268,7 +274,7 @@ export default function Header() {
                 {/* User */}
 
                 {
-                    loggedIn ?
+                    userDetails ?
                         <Dropdown
                             className='hover:cursor-pointer'
                             menu={{
@@ -281,15 +287,15 @@ export default function Header() {
                                 onClick={(e) => { e.preventDefault() }}
                             >
                                 <FaUserAlt className='w-1/4 h-full' />
-                                <span className='hidden md:flex w-3/4 h-full text-sm font-semibold flexRowCenter justify-start'>Rakibul Alam Nahin</span>
+                                <span className='hidden md:flex w-3/4 h-full text-sm font-semibold flexRowCenter justify-start'>{userDetails.name}</span>
                                 <DownOutlined className='hidden md:flex w-6 h-6' />
                             </span>
 
                         </Dropdown>
                         :
                         <span
-                            className='hidden  flex-row w-32 h-full items-center gap-3 hover:text-red-700 hover:cursor-pointer'
-                            onClick={(e) => { e.preventDefault() }}
+                            className='hidden md:flex flex-row justify-center items-center w-32 h-full gap-3 hover:text-red-700 hover:cursor-pointer'
+                            onClick={(e) => { router.push("/user/login") }}
                         >
                             <FaUserAlt className='w-1/4 h-full' />
                             <span className='hidden md:flex w-3/4 h-full text-sm font-semibold flexRowCenter justify-start'>Guest</span>

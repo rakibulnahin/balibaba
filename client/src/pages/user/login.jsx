@@ -6,9 +6,13 @@ import UserModal from '@/components/userModal'
 import { FaRegUser, FaUserCircle } from "react-icons/fa"
 import { RiLockPasswordLine, RiLockPasswordFill } from "react-icons/ri"
 
+import { setUserDetails } from '@/redux/userDetailsSlice'
+import { useDispatch } from 'react-redux'
+
 const Login = () => {
 
     const router = useRouter()
+    const dispatch = useDispatch()
 
     const [modalText, setModalText] = useState("")
     const [modalOpen, setModalOpen] = useState(false)
@@ -48,6 +52,7 @@ const Login = () => {
                 )
                 if (response.data) {
                     console.log(response.data);
+                    dispatch(setUserDetails(response.data))
                     router.push("/")
                 } else {
                     console.log((response.data));
