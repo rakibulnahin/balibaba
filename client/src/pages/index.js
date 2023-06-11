@@ -2,6 +2,9 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { useEffect, useRef, useState } from 'react'
 import { Carousel } from 'antd';
+import { useSelector, useDispatch } from 'react-redux'
+import { useRouter } from 'next/router';
+import { addToCart, clearCart } from '@/redux/cartSlice'
 
 // import { data } from '@/data/home';
 
@@ -9,7 +12,6 @@ import { AiTwotoneStar } from "react-icons/ai"
 import { BsFillCartPlusFill } from "react-icons/bs"
 import { CiShoppingTag } from 'react-icons/ci'
 import { getAllProducts } from './api/product';
-import { useRouter } from 'next/router';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,6 +23,7 @@ export default function Home() {
 
   const ref = useRef()
   const router = useRouter()
+  const dispatch = useDispatch()
 
   // From database
   const [banner, setBanner] = useState([
@@ -211,7 +214,13 @@ export default function Home() {
 
                 >
 
-                  <span className='border-2 border-white bg-white p-2 rounded-full cursor-pointer text-third'><BsFillCartPlusFill /></span>
+                  <span className='border-2 border-white bg-white p-2 rounded-full cursor-pointer text-third'
+                    onClick={()=>{
+                      dispatch(addToCart(value))
+                    }}
+                  >
+                    <BsFillCartPlusFill />
+                  </span>
                   <span className='border-2 border-white bg-white p-2 rounded-full cursor-pointer text-first'><CiShoppingTag /></span>
 
                 </span>

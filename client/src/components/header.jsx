@@ -3,13 +3,15 @@ import { Inter } from 'next/font/google'
 import { Select, Dropdown } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
-import { setUserDetials } from '@/redux/userDetailsSlice'
+import { setUserDetials, clearUserDetails } from '@/redux/userDetailsSlice'
+import { removeFromCart, clearCart } from '@/redux/cartSlice'
 
 const inter = Inter({ subsets: ['latin'] })
 
+// icons
 import { DownOutlined } from '@ant-design/icons';
-
 import { ImLocation2 } from 'react-icons/im'
 import { FaUserAlt } from 'react-icons/fa'
 import { CiUser, CiLogout, CiMenuKebab } from "react-icons/ci"
@@ -17,12 +19,12 @@ import { BiPurchaseTag } from "react-icons/bi"
 import { RiNotification3Fill } from "react-icons/ri"
 import { BsCart4, BsSearch, BsCaretRight } from "react-icons/bs"
 import { GrAddCircle, GrSubtractCircle, GrClose } from "react-icons/gr"
-import { useRouter } from 'next/router'
 
 
 export default function Header() {
 
     const router = useRouter()
+    const dispatch = useDispatch()
 
     const flag = [
         {
@@ -66,7 +68,13 @@ export default function Header() {
 
         {
             label: (
-                <span className='flexRowCenter gap-2 '> <CiLogout className='w-5 h-5' /> <span>Logout</span> </span>
+                <span
+                    className='flexRowCenter gap-2 '
+                    onClick={() => { dispatch(clearUserDetails()) }}
+                >
+                    <CiLogout className='w-5 h-5' />
+                    <span>Logout</span>
+                </span>
             ),
             key: '2',
             type: "hidden"
@@ -129,34 +137,32 @@ export default function Header() {
     ]
 
     // Global states from redux
-    const [loggedIn, setLoggedIn] = useState(true)
-    const [cart, setCart] = useState([
-        {
-            id: "1",
-            name: "PS5 Grand extended with 50% discount on 3 games",
-            image: "/product.png",
-            qunatity: 2,
-            cost: 400,
-            discount: 300,
-            price: 600
-        },
-        {
-            id: "1",
-            name: "PS5 Grand extended with 50% discount on 3 games",
-            image: "/product.png",
-            qunatity: 2,
-            cost: 400,
-            discount: 300,
-            price: 600
-        },
+    // const [loggedIn, setLoggedIn] = useState(true)
+    // const [cart, setCart] = useState([
+    //     {
+    //         id: "1",
+    //         name: "PS5 Grand extended with 50% discount on 3 games",
+    //         image: "/product.png",
+    //         qunatity: 2,
+    //         cost: 400,
+    //         discount: 300,
+    //         price: 600
+    //     },
+    //     {
+    //         id: "1",
+    //         name: "PS5 Grand extended with 50% discount on 3 games",
+    //         image: "/product.png",
+    //         qunatity: 2,
+    //         cost: 400,
+    //         discount: 300,
+    //         price: 600
+    //     },
 
 
-    ])
+    // ])
     const userDetails = useSelector((state) => state.userDetails)
+    const cart = useSelector((state) => state.cartDetails)
 
-    // useEffect(()=>{
-    //     console.log("user details", userDetails);
-    // }, [userDetails])
 
 
     // Header states 
@@ -346,49 +352,54 @@ export default function Header() {
 
                         <div className='w-full h-80 overflow-auto gap-1'>
                             {
-                                cart.map((item, index) => (
-                                    <div key={index} className='w-full p-2 h-24 flex flex-col justify-start border-b-2 border-third'>
+                                cart.map((item, index) => {
+                                    const base64string = btoa(String.fromCharCode(...new Uint8Array(item.image.data.data)))
 
-                                        <span className='flex flex-row text-sm gap-1'>
-                                            <img src={item.image} className='w-11 h-11 rounded-md' />
-                                            <span>
+                                    return (
+                                        <div key={index} className='w-full p-2 h-24 flex flex-col justify-start border-b-2 border-third'>
+
+                                            <span className='flex flex-row text-sm gap-1'>
+                                                <img src={`data:image/png;base64,${base64string}`} className='w-11 h-11 rounded-md' />
+                                                <span>
+                                                    {
+                                                        item.name.length > 30 ?
+                                                            <div>{item.name.slice(0, 20) + "..."}</div>
+
+                                                            :
+                                                            <div>{item.name}</div>
+                                                    }
+
+                                                    <div className='text-xs font-bold text-fourth'>Quantity : {item.quantity}</div>
+                                                </span>
+
+                                            </span>
+
+                                            <span className='flex flex-row items-center justify-between'>
                                                 {
-                                                    item.name.length > 30 ?
-                                                        <div>{item.name.slice(0, 20) + "..."}</div>
-
+                                                    item.discount != 0 ?
+                                                        <span className='flex flex-row items-end gap-1'>
+                                                            <span className='text-xl text-fourth font-bold'>&#36;{item.discount}</span>
+                                                            <span className='text-sm line-through text-slate-500 font-medium'>&#36;{item.price}</span>
+                                                        </span>
                                                         :
-                                                        <div>{item.name}</div>
+                                                        <span>
+                                                            <span className='text-xl text-fourth font-bold'>&#36;{item.price}</span>
+                                                        </span>
                                                 }
 
-                                                <div className='text-xs font-bold text-fourth'>Quantity : {item.qunatity}</div>
+                                                <span className='flexRowCenter gap-3'>
+                                                    <GrAddCircle className='w-6 h-6 text-fourth' />
+                                                    <GrSubtractCircle className='w-6 h-6 text-fourth' />
+                                                </span>
+
                                             </span>
 
-                                        </span>
-
-                                        <span className='flex flex-row items-center justify-between'>
-                                            {
-                                                item.discount != 0 ?
-                                                    <span className='flex flex-row items-end gap-1'>
-                                                        <span className='text-xl text-fourth font-bold'>&#36;{item.discount}</span>
-                                                        <span className='text-sm line-through text-slate-500 font-medium'>&#36;{item.cost}</span>
-                                                    </span>
-                                                    :
-                                                    <span>
-                                                        <span className='text-xl text-fourth font-bold'>&#36;{item.cost}</span>
-                                                    </span>
-                                            }
-
-                                            <span className='flexRowCenter gap-3'>
-                                                <GrAddCircle className='w-6 h-6 text-fourth' />
-                                                <GrSubtractCircle className='w-6 h-6 text-fourth' />
-                                            </span>
-
-                                        </span>
 
 
-
-                                    </div>
-                                ))
+                                        </div>
+                                    )
+                                }
+                                )
                             }
                         </div>
 

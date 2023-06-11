@@ -7,9 +7,9 @@ const userDetailsSlice = createSlice({
         setUserDetails: (state, action) => {
             return action.payload
         },
-        clearUserDetials: () => null
+        clearUserDetails: () => null
     },
 })
 
-export const { setUserDetails, clearUserDetials } = userDetailsSlice.actions;
+export const { setUserDetails, clearUserDetails } = userDetailsSlice.actions;
 export default userDetailsSlice.reducer;
