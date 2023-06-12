@@ -47,43 +47,43 @@ export default function Home() {
     {
       image: '/banners/1.png',
       title: "Special Offers",
-      link: "/products/category?tags=special offer" 
+      link: "/products/category?tags=special offer"
     },
 
     {
       image: '/banners/2.png',
       title: "New Arrivals",
-      link: "/products/category?tags=new arrival" 
+      link: "/products/category?tags=new arrival"
     },
 
     {
       image: '/banners/3.png',
       title: "Flash Deals",
-      link: "/products/category?tags=trending" 
+      link: "/products/category?tags=trending"
     },
 
     {
       image: '/banners/1.png',
       title: "Most Bought",
-      link: "/products/category?tags=most bought" 
+      link: "/products/category?tags=most bought"
     },
 
     {
       image: '/banners/2.png',
       title: "Trending",
-      link: "/products/category?tags=flash deal" 
+      link: "/products/category?tags=flash deal"
     },
 
     {
       image: '/banners/3.png',
       title: "Pre-Order",
-      link: "/products/category?tags=pre order" 
+      link: "/products/category?tags=pre order"
     },
 
     {
       image: '/banners/1.png',
       title: "Affordable & Discounts",
-      link: "/products/category?tags=discount" 
+      link: "/products/category?tags=discount"
     }
   ])
 
@@ -92,13 +92,21 @@ export default function Home() {
       let buynow = await getAllProducts()
       if (buynow) {
         setBuyNow(buynow)
-        console.log(buynow);
+        // console.log(buynow);
       }
     }
 
     getProducts()
 
   }, [])
+
+  const handleAddToCart = (value) => {
+    console.log(
+      value
+    );
+    dispatch(addToCart(value))
+    // value
+  }
 
   const BannerView = () => (
     <div className='relative py-5 flexRowCenter w-screen h-100 xl:h-110 bg-gradient-to-b from-third via-second to-transparent cursor-pointer'>
@@ -121,7 +129,7 @@ export default function Home() {
           {
             banner.map((value, index) => (
               <div key={index} className='flexRowCenter w-full h-96 xl:h-110 rounded-lg object-fill'>
-                
+
                 <img className='w-full h-full rounded-lg object-fill' src={value.image} />
                 {/* hello */}
               </div>
@@ -146,9 +154,9 @@ export default function Home() {
 
       {
         tags.map((value, index) => (
-          <span key={index} 
+          <span key={index}
             className='p-3 w-60 lg:w-72 shadow-left shadow-third/40 rounded-md bg-white flexColCenter hover:text-second cursor-default'
-            onClick={()=>{router.push(value.link)}}
+            onClick={() => { router.push(value.link) }}
           >
             <span className='w-full justify-start text-xl font-semibold underline'>{value.title}</span>
             <img className='my-2 w-full h-60 lg:h-72 rounded-lg' src={value.image} />
@@ -172,40 +180,44 @@ export default function Home() {
               <span
                 key={index}
                 className='relative group w-60 min-w-[230px] shadow-left shadow-third/40 rounded-md bg-white flexColCenter cursor-default overflow-hidden'
-                onClick={() => { router.push(`/products/${value.ProductID}`) }}
+                
               >
-                <img className='w-full h-56 rounded-t-lg' src={`data:image/png;base64,${base64string}`} alt='Sorry I guess the server stopped' />
-                {
-                  value.name.length > 50
-                    ?
-                    <span className='w-full px-2 font-medium'>{value.name.slice(0, 40) + "..."}</span>
-                    :
-                    <span className='w-full px-2 font-medium'>{value.name}</span>
-
-                }
-
-                <span className='p-2 flex flex-row w-full justify-between'>
-
+                <div className='w-full'
+                  onClick={() => { router.push(`/products/${value.ProductID}`) }}
+                >
+                  <img className='w-full h-56 rounded-t-lg' src={`data:image/png;base64,${base64string}`} alt='Sorry I guess the server stopped' />
                   {
-                    value.discount != 0
+                    value.name.length > 50
                       ?
-                      <span className='w-full gap-2 flex flex-row items-end font-medium'>
-                        <span className='text-xl font-bold text-fourth '>&#36;{value.discount}</span>
-                        <span className='text-sm line-through'>&#36;{value.price}</span>
-                      </span>
-
+                      <span className='flex w-full px-2 font-medium'>{value.name.slice(0, 40) + "..."}</span>
                       :
-                      <span className='w-full px-2 text-xl font-bold text-fourth '>&#36;{value.price}</span>
+                      <span className='w-full flex px-2 font-medium'>{value.name}</span>
 
                   }
 
-                  <span className='flex flex-row items-center gap-1 text-sm'>
-                    <AiTwotoneStar className='text-yellow-500 text-lg' />
-                    <span>{value.rating}/5</span>
-                    <span>({value.sold})</span>
-                  </span>
+                  <span className='p-2 flex flex-row w-full justify-between'>
 
-                </span>
+                    {
+                      value.discount != 0
+                        ?
+                        <span className='w-full gap-2 flex flex-row items-end font-medium'>
+                          <span className='text-xl font-bold text-fourth '>&#36;{value.discount}</span>
+                          <span className='text-sm line-through'>&#36;{value.price}</span>
+                        </span>
+
+                        :
+                        <span className='w-full px-2 text-xl font-bold text-fourth '>&#36;{value.price}</span>
+
+                    }
+
+                    <span className='flex flex-row items-center gap-1 text-sm'>
+                      <AiTwotoneStar className='text-yellow-500 text-lg' />
+                      <span>{value.rating}/5</span>
+                      <span>({value.sold})</span>
+                    </span>
+
+                  </span>
+                </div>
 
                 {/* Hover elements */}
                 <span
@@ -215,9 +227,7 @@ export default function Home() {
                 >
 
                   <span className='border-2 border-white bg-white p-2 rounded-full cursor-pointer text-third'
-                    onClick={()=>{
-                      dispatch(addToCart(value))
-                    }}
+                    onClick={() => { handleAddToCart({...value, quantity: 1}) }}
                   >
                     <BsFillCartPlusFill />
                   </span>
@@ -243,10 +253,10 @@ export default function Home() {
 
 
       {/* menu */}
-      <MenuView/>
+      <MenuView />
 
       {/* buy now */}
-      <BuynowView />  
+      <BuynowView />
 
     </main>
   )

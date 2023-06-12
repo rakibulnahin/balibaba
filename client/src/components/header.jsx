@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { setUserDetials, clearUserDetails } from '@/redux/userDetailsSlice'
-import { removeFromCart, clearCart } from '@/redux/cartSlice'
+import { clearCart, editCart } from '@/redux/cartSlice'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -175,6 +175,20 @@ export default function Header() {
         setLocation(value)
     };
 
+    const increaseQuantityCart = (index) => {
+        // let x = [...cart]
+        // console.log(x);
+        // let product = x[index]
+        // product['quantity'] += 1
+        // x[index] = product
+        dispatch(editCart({index: index, increase:true}))
+
+    }
+
+    const decreaseQuantityCart = (index) => {
+        dispatch(editCart({index: index, increase:false}))
+    }
+
 
     return (
         (
@@ -335,7 +349,7 @@ export default function Header() {
                 <span className=' relative flex flex-row px-3 h-full justify-end items-center'>
                     <BsCart4 className='w-8 h-8 justify-end cursor-pointer' onClick={() => { setShowCart(!showCart) }} />
 
-                    <div className='z-20 absolute flex-col justify-start  top-14 right-0 w-60 h-100 items-start rounded-md bg-white border-black border-2'
+                    <div className='z-20 absolute flex-col justify-start  top-14 right-0 w-64 h-110 items-start rounded-lg bg-white border-black border-2'
                         style={{ display: showCart ? "flex" : "none" }}
                     >
                         <span className='absolute w-5 h-5 bg-second -top-3 right-4 rotate-45 border-t-2 border-l-2 border-black'></span>
@@ -346,30 +360,35 @@ export default function Header() {
                                 <span className='w-5 h-5 rounded-full flexRowCenter font-bold bg-white'>{cart.length}</span>
                             </span>
 
+                            <span className='p-1 px-2 rounded-md  font-bold bg-white text-sm  cursor-pointer hover:bg-red-500 hover:text-white' 
+                                onClick={()=>{dispatch(clearCart())}}
+                            >
+                                Clear
+                            </span>
                             <span className='p-1 rounded-full  font-bold bg-white text-sm  cursor-pointer' onClick={() => { setShowCart(false) }}><GrClose /></span>
 
                         </span>
 
-                        <div className='w-full h-80 overflow-auto gap-1'>
+                        <div className='w-full h-96 overflow-auto gap-1'>
                             {
                                 cart.map((item, index) => {
                                     const base64string = btoa(String.fromCharCode(...new Uint8Array(item.image.data.data)))
 
                                     return (
-                                        <div key={index} className='w-full p-2 h-24 flex flex-col justify-start border-b-2 border-third'>
+                                        <div key={index} className='w-full p-2 flex flex-col justify-start border-b-2 border-third'>
 
-                                            <span className='flex flex-row text-sm gap-1'>
+                                            <span className='flex flex-row font-semibold gap-1'>
                                                 <img src={`data:image/png;base64,${base64string}`} className='w-11 h-11 rounded-md' />
                                                 <span>
                                                     {
                                                         item.name.length > 30 ?
-                                                            <div>{item.name.slice(0, 20) + "..."}</div>
+                                                            <div>{item.name.slice(0, 25) + "..."}</div>
 
                                                             :
                                                             <div>{item.name}</div>
                                                     }
 
-                                                    <div className='text-xs font-bold text-fourth'>Quantity : {item.quantity}</div>
+                                                    <div className='text-sm font-bold text-fourth'>Quantity : {item.quantity}</div>
                                                 </span>
 
                                             </span>
@@ -388,8 +407,14 @@ export default function Header() {
                                                 }
 
                                                 <span className='flexRowCenter gap-3'>
-                                                    <GrAddCircle className='w-6 h-6 text-fourth' />
-                                                    <GrSubtractCircle className='w-6 h-6 text-fourth' />
+                                                    <GrAddCircle 
+                                                        className='w-6 h-6 text-fourth' 
+                                                        onClick={()=>{increaseQuantityCart(index)}}
+                                                    />
+                                                    <GrSubtractCircle 
+                                                        className='w-6 h-6 text-fourth' 
+                                                        onClick={()=>{decreaseQuantityCart(index)}}
+                                                    />
                                                 </span>
 
                                             </span>

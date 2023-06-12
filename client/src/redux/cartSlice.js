@@ -11,15 +11,35 @@ const cartSlice = createSlice({
             ]
         },
 
-        removeFromCart: (state, action) => {
+        // removeFromCart: (state, action) => {
+        //     let x = state;
+        //     x.splice(action.payload, 1)
+        //     return x
+        // },
+
+        editCart: (state, action) => {
             let x = state;
-            x.splice(action.payload, 1)
+            let index = action.payload.index;
+            let task = action.payload.increase;
+            let product = x[index];
+            if(task == true && product['quantity'] < product["instock"]){
+                product['quantity'] += 1
+            }else if(task == false){
+                if(product['quantity'] > 1){
+                    product['quantity'] -= 1
+                }else{
+                    x.splice(index, 1)
+                    return x
+                }
+            }
+
+            x[index] = product
             return x
         },
 
-        clearCart: () => []
+        clearCart: (state, action) => [],
     }
 })
 
-export const {addToCart, removeFromCart, clearCart} = cartSlice.actions
+export const {addToCart, removeFromCart, editCart, clearCart} = cartSlice.actions
 export default cartSlice.reducer
