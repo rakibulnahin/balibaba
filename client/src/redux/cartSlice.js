@@ -22,11 +22,11 @@ const cartSlice = createSlice({
             let index = action.payload.index;
             let task = action.payload.increase;
             let product = x[index];
-            if(task == true && product['quantity'] < product["instock"]){
-                product['quantity'] += 1
+            if(task == true && product['purchaseQuantity'] < product["instock"]){
+                product['purchaseQuantity'] += 1
             }else if(task == false){
-                if(product['quantity'] > 1){
-                    product['quantity'] -= 1
+                if(product['purchaseQuantity'] > 1){
+                    product['purchaseQuantity'] -= 1
                 }else{
                     x.splice(index, 1)
                     return x

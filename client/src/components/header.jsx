@@ -181,12 +181,12 @@ export default function Header() {
         // let product = x[index]
         // product['quantity'] += 1
         // x[index] = product
-        dispatch(editCart({index: index, increase:true}))
+        dispatch(editCart({ index: index, increase: true }))
 
     }
 
     const decreaseQuantityCart = (index) => {
-        dispatch(editCart({index: index, increase:false}))
+        dispatch(editCart({ index: index, increase: false }))
     }
 
 
@@ -360,8 +360,8 @@ export default function Header() {
                                 <span className='w-5 h-5 rounded-full flexRowCenter font-bold bg-white'>{cart.length}</span>
                             </span>
 
-                            <span className='p-1 px-2 rounded-md  font-bold bg-white text-sm  cursor-pointer hover:bg-red-500 hover:text-white' 
-                                onClick={()=>{dispatch(clearCart())}}
+                            <span className='p-1 px-2 rounded-md  font-bold bg-white text-sm  cursor-pointer hover:bg-red-500 hover:text-white'
+                                onClick={() => { dispatch(clearCart()) }}
                             >
                                 Clear
                             </span>
@@ -388,7 +388,7 @@ export default function Header() {
                                                             <div>{item.name}</div>
                                                     }
 
-                                                    <div className='text-sm font-bold text-fourth'>Quantity : {item.quantity}</div>
+                                                    <div className='text-sm font-bold text-fourth'>Quantity : {item.purchaseQuantity}</div>
                                                 </span>
 
                                             </span>
@@ -407,13 +407,13 @@ export default function Header() {
                                                 }
 
                                                 <span className='flexRowCenter gap-3'>
-                                                    <GrAddCircle 
-                                                        className='w-6 h-6 text-fourth' 
-                                                        onClick={()=>{increaseQuantityCart(index)}}
+                                                    <GrAddCircle
+                                                        className='w-6 h-6 text-fourth'
+                                                        onClick={() => { increaseQuantityCart(index) }}
                                                     />
-                                                    <GrSubtractCircle 
-                                                        className='w-6 h-6 text-fourth' 
-                                                        onClick={()=>{decreaseQuantityCart(index)}}
+                                                    <GrSubtractCircle
+                                                        className='w-6 h-6 text-fourth'
+                                                        onClick={() => { decreaseQuantityCart(index) }}
                                                     />
                                                 </span>
 
@@ -429,7 +429,7 @@ export default function Header() {
                         </div>
 
                         <span className='flexRowCenter justify-end w-full h-9'>
-                            <span className='w-full mx-1 h-8 flexRowCenter bg-first text-white font-semibold rounded-md'>Proceed to checkout</span>
+                            <span className='w-full mx-0.5 my-0.5 h-8 flexRowCenter bg-first text-white font-semibold rounded-md'>Proceed to checkout</span>
 
                         </span>
 

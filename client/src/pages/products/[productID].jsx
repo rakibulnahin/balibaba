@@ -1,12 +1,18 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState, useLayoutEffect } from 'react'
+import { useDispatch } from 'react-redux'
+
+import { addToCart } from '@/redux/cartSlice'
 import { getOneProduct } from '../api/product'
+
 import { Modal, Select } from 'antd'
 import { TfiCommentsSmiley } from 'react-icons/tfi'
+import {verfiyUser} from '@/components/userVerification'
 
 const ProductView = () => {
 
    const router = useRouter()
+   const dispatch = useDispatch()
 
    // From database
    const [product, setProduct] = useState(null)
@@ -30,6 +36,8 @@ const ProductView = () => {
 
    const [isModalOpen, setIsModalOpen] = useState(false)
    const [modalBills, setModalBills] = useState({})
+
+   const verification = verfiyUser()
 
    useEffect(() => {
       async function getProduct() {
@@ -221,6 +229,16 @@ const ProductView = () => {
       }
    }
 
+   const onAddToCart = () => {
+      if (verification) {
+         let add_product = { ...product, purchaseQuantity: purchaseQuantity, optionSelect: 0 }
+         dispatch(addToCart(add_product))
+      } else {
+         router.push("/user/login")
+      }
+
+   }
+
    const RightView = () => (
       <>
          <span className='text-xl font-semibold'>
@@ -238,7 +256,7 @@ const ProductView = () => {
             Total price: &#2547;{(price * purchaseQuantity) + deliverCharge}
          </span>
 
-         <button className='py-2 flexRowCenter w-full bg-blue-500 rounded-xl'>Add to cart</button>
+         <button className='py-2 flexRowCenter w-full bg-blue-500 rounded-xl' onClick={() => { onAddToCart() }}>Add to cart</button>
 
          <button
             className='py-2 flexRowCenter w-full bg-first rounded-xl'

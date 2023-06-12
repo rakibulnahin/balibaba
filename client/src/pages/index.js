@@ -17,6 +17,8 @@ import { getAllProducts } from './api/product';
 const inter = Inter({ subsets: ['latin'] })
 
 import demo_product from '@/data/demo_product';
+import { verfiyUser } from '@/components/userVerification';
+
 
 
 export default function Home() {
@@ -24,6 +26,7 @@ export default function Home() {
   const ref = useRef()
   const router = useRouter()
   const dispatch = useDispatch()
+  const verification = verfiyUser()
 
   // From database
   const [banner, setBanner] = useState([
@@ -227,7 +230,13 @@ export default function Home() {
                 >
 
                   <span className='border-2 border-white bg-white p-2 rounded-full cursor-pointer text-third'
-                    onClick={() => { handleAddToCart({...value, quantity: 1}) }}
+                    onClick={() => { 
+                      if(verification){
+                        handleAddToCart({...value, purchaseQuantity: 1, optionSelect: 0}) 
+                      }else{
+                        router.push("/user/login")
+                      }
+                    }}
                   >
                     <BsFillCartPlusFill />
                   </span>
