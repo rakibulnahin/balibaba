@@ -429,7 +429,12 @@ export default function Header() {
                         </div>
 
                         <span className='flexRowCenter justify-end w-full h-9'>
-                            <span className='w-full mx-0.5 my-0.5 h-8 flexRowCenter bg-first text-white font-semibold rounded-md'>Proceed to checkout</span>
+                            <button 
+                                className='w-full mx-0.5 my-0.5 h-8 flexRowCenter bg-first text-white font-semibold rounded-md'
+                                onClick={()=>{router.push("/products/checkout")}}
+                            >
+                                Proceed to checkout
+                            </button>
 
                         </span>
 
