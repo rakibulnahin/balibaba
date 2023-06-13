@@ -17,7 +17,7 @@ import { getAllProducts } from './api/product';
 const inter = Inter({ subsets: ['latin'] })
 
 import demo_product from '@/data/demo_product';
-import { verfiyUser } from '@/components/userVerification';
+import { VerfiyUser } from '@/components/userVerification';
 
 
 
@@ -26,7 +26,7 @@ export default function Home() {
   const ref = useRef()
   const router = useRouter()
   const dispatch = useDispatch()
-  const verification = verfiyUser()
+  const verification = VerfiyUser()
 
   // From database
   const [banner, setBanner] = useState([

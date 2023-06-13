@@ -7,7 +7,7 @@ import { getOneProduct } from '../api/product'
 
 import { Modal, Select } from 'antd'
 import { TfiCommentsSmiley } from 'react-icons/tfi'
-import {verfiyUser} from '@/components/userVerification'
+import {VerfiyUser} from '@/components/userVerification'
 
 const ProductView = () => {
 
@@ -37,7 +37,7 @@ const ProductView = () => {
    const [isModalOpen, setIsModalOpen] = useState(false)
    const [modalBills, setModalBills] = useState({})
 
-   const verification = verfiyUser()
+   const verification = VerfiyUser()
 
    useEffect(() => {
       async function getProduct() {
