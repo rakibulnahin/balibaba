@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux'
 
 import { addToCart } from '@/redux/cartSlice'
 import { getOneProduct } from '../api/product'
+import {VerfiyUser} from '@/components/userVerification'
 
 import { Modal, Select } from 'antd'
 import { TfiCommentsSmiley } from 'react-icons/tfi'
-import {VerfiyUser} from '@/components/userVerification'
 
 const ProductView = () => {
 

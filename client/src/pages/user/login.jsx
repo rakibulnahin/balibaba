@@ -44,7 +44,7 @@ const Login = () => {
                 openModal("please provide both credential")
                 setLoggedIn(false)
             } else {
-                let response = await axios.post("http://localhost:3001/api/users/getUserByID",
+                let response = await axios.post(process.env.NEXT_PUBLIC_SERVER+"/api/users/getUserByID",
                     {
                         username: loginUsername,
                         password: loginPass
